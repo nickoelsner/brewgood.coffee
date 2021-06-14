@@ -1,0 +1,30 @@
+$color-primary: #292943;
+$color-secondary: #816157;
+$color-background: #d8d4d0;
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: Inter, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
+    Helvetica Neue, sans-serif;
+  color: $color-primary;
+  background-color: $color-background;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/assets/fonts/Inter-VariableFont_slnt,wght.tff);
+}
