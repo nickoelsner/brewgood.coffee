@@ -7,7 +7,7 @@ export default function Home() {
       <main className={styles.main}>
         <h1 className={styles.title}>welcome to brewratio.coffee</h1>
         <img src="/assets/images/Logo.svg" alt="coffee cup logo" className={styles.logo} />
-        <Link href="/methods">
+        <Link href="/brewMethods">
           <a className={styles.button}>
             <span>start brewing</span>
             <img src="/assets/images/arrow.svg" alt="" />
