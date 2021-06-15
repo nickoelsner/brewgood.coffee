@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "../styles/Home.module.scss";
 
 export default function Home() {
@@ -5,7 +6,13 @@ export default function Home() {
     <div className={styles.container}>
       <main className={styles.main}>
         <h1 className={styles.title}>welcome to brewratio.coffee</h1>
-        <img src="/assets/images/Logo.svg" alt="coffee cup logo" width="164" height="auto" />
+        <img src="/assets/images/Logo.svg" alt="coffee cup logo" className={styles.logo} />
+        <Link href="/methods">
+          <a className={styles.button}>
+            <span>start brewing</span>
+            <img src="/assets/images/arrow.svg" alt="" />
+          </a>
+        </Link>
       </main>
     </div>
   );
