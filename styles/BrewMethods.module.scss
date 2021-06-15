@@ -1,3 +1,4 @@
+@import "/styles/colors";
 @import "/styles/base";
 
 .container {
@@ -5,9 +6,33 @@
 
   .main {
     @extend %main-base;
-  }
+    justify-content: flex-start;
 
-  .title {
-    @extend %title-base;
+    .title {
+      @extend %title-base;
+      margin-bottom: 3rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, auto);
+      gap: 1.2rem;
+    }
+
+    .button {
+      @extend %button-base;
+      flex-direction: column;
+      font-size: 1rem;
+      padding: 8px;
+      height: 128px;
+      width: 128px;
+      justify-content: center;
+
+      img {
+        height: 60px;
+        width: auto;
+        margin-bottom: 0.5rem;
+      }
+    }
   }
 }

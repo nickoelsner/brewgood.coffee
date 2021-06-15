@@ -23,3 +23,16 @@
   font-size: 2rem;
   text-align: center;
 }
+
+%button-base {
+  border: 4px solid $color-primary;
+  background-color: white;
+  padding: 1.125rem;
+  border-radius: 0.75rem;
+  font-weight: bold;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 4px 4px 0px $color-primary;
+}
