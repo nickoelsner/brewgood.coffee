@@ -1,0 +1,25 @@
+@import "/styles/colors";
+@import "/styles/base";
+
+.container {
+  @extend %container-base;
+
+  .methods {
+    display: flex;
+    overflow-x: auto;
+    gap: 10px;
+
+    .button {
+      border: 3px solid $color-primary;
+      background-color: white;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.75rem;
+      font-weight: bold;
+      font-size: 1rem;
+      display: inline-block;
+      height: 2rem;
+      box-shadow: 3px 3px 0px $color-primary;
+      overflow: none;
+    }
+  }
+}
