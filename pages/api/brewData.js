@@ -4,7 +4,7 @@ const brewData = (req, res) => {
   res.status(200).json([
     {
       name: "pour-over",
-      imageSrc: "/assets/images/pour-over",
+      imageSrc: "/assets/images/pour-over.svg",
       ratio: 15,
       maxCoffee: null,
       waterTemp: 205,
@@ -19,7 +19,7 @@ const brewData = (req, res) => {
     },
     {
       name: "chemex",
-      imageSrc: "/assets/images/chemex",
+      imageSrc: "/assets/images/chemex.svg",
       ratio: 15,
       maxCoffee: 60,
       waterTemp: 205,
@@ -35,7 +35,7 @@ const brewData = (req, res) => {
     },
     {
       name: "aeropress",
-      imageSrc: "/assets/images/aeropress",
+      imageSrc: "/assets/images/aeropress.svg",
       ratio: 14,
       maxCoffee: 21.428,
       waterTemp: 205,
@@ -54,7 +54,7 @@ const brewData = (req, res) => {
     },
     {
       name: "french press",
-      imageSrc: "/assets/images/french-press",
+      imageSrc: "/assets/images/french-press.svg",
       ratio: 15,
       maxCoffee: null,
       waterTemp: 205,
@@ -73,7 +73,7 @@ const brewData = (req, res) => {
     },
     {
       name: "moka pot",
-      imageSrc: "/assets/images/moka-pot",
+      imageSrc: "/assets/images/moka-pot.svg",
       ratio: 15,
       maxCoffee: 60,
       waterTemp: 205,
@@ -93,7 +93,7 @@ const brewData = (req, res) => {
     },
     {
       name: "cold brew",
-      imageSrc: "/assets/images/cold-brew",
+      imageSrc: "/assets/images/cold-brew.svg",
       ratio: 15,
       maxCoffee: null,
       waterTemp: 60,
