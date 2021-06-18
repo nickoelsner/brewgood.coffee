@@ -4,7 +4,7 @@ import { brewData } from "./data/brewMethodData";
 
 const BrewMethodCard = ({ brewMethod }) => {
   return (
-    <Link href={`/[${brewMethod.name}]`}>
+    <Link href={`/${brewMethod.name}`}>
       <a className={styles.button}>
         <img src={brewMethod.imageSrc} alt={`${brewMethod.name} icon`} />
         <span>{brewMethod.name}</span>

@@ -2,24 +2,40 @@
 @import "/styles/base";
 
 .container {
-  @extend %container-base;
+  min-height: 100vh;
+  padding: 5vh 1rem;
 
   .methods {
     display: flex;
     overflow-x: auto;
     gap: 10px;
+    padding: 4px 0;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 
     .button {
       border: 3px solid $color-primary;
       background-color: white;
       padding: 0.25rem 0.5rem;
       border-radius: 0.75rem;
-      font-weight: bold;
+      font-weight: 600;
       font-size: 1rem;
-      display: inline-block;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
       height: 2rem;
       box-shadow: 3px 3px 0px $color-primary;
-      overflow: none;
+      white-space: nowrap;
     }
+
+    .selected {
+      background-color: $color-secondary;
+      color: white;
+      box-shadow: none;
+      transform: translate(3px, 3px);
+    }
+  }
+  .methods::-webkit-scrollbar {
+    display: none;
   }
 }
