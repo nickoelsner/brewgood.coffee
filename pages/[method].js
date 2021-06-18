@@ -12,18 +12,24 @@ const Recipe = () => {
 
   const [amountOfCoffee, setAmountOfCoffee] = useState(20);
   const [coffeeUnits, setCoffeeUnits] = useState("g");
-  const [water, setWater] = useState(amountOfCoffee * ratio);
+  const [amountOfWater, setAmountOfWater] = useState(amountOfCoffee * ratio);
   const [waterUnits, setWaterUnits] = useState("g");
 
   const hzMouseScroll = useRef();
-  const scrollHorizontal = (e) => {
-    hzMouseScroll.current.scrollLeft += e.deltaY;
+  const scrollHorizontal = (event) => {
+    hzMouseScroll.current.scrollLeft += event.deltaY;
   };
 
   const handleCoffeeChange = (event) => {
     const updatedCoffee = event.target.value * 1;
     setAmountOfCoffee(updatedCoffee);
-    setWater(updatedCoffee * ratio);
+    setAmountOfWater(updatedCoffee * ratio);
+  };
+
+  const handleWaterChange = (event) => {
+    const updatedWater = event.target.value * 1;
+    setAmountOfWater(updatedWater);
+    setAmountOfCoffee(updatedWater / ratio);
   };
 
   return (
@@ -41,14 +47,7 @@ const Recipe = () => {
       <section>
         <form>
           <label htmlFor="coffee">coffee</label>
-          <input
-            type="number"
-            name="coffee"
-            id="coffee"
-            value={amountOfCoffee}
-            onChange={handleCoffeeChange}
-            // onBlur={updateCoffeeScrollPosition}
-          />
+          <input type="number" name="coffee" id="coffee" value={amountOfCoffee} onChange={handleCoffeeChange} />
           <div>
             {coffeeUnitOptions.map((unit) => (
               <label>
@@ -59,6 +58,25 @@ const Recipe = () => {
                   value={unit}
                   onChange={() => setCoffeeUnits(unit)}
                   checked={coffeeUnits === unit}
+                />
+                {unit}
+              </label>
+            ))}
+          </div>
+        </form>
+        <form>
+          <label htmlFor="water">water</label>
+          <input type="number" name="water" id="water" value={amountOfWater} onChange={handleWaterChange} />
+          <div>
+            {waterUnitOptions.map((unit) => (
+              <label>
+                <input
+                  type="radio"
+                  name="waterUnits"
+                  id={unit}
+                  value={unit}
+                  onChange={() => setWaterUnits(unit)}
+                  checked={waterUnits === unit}
                 />
                 {unit}
               </label>
