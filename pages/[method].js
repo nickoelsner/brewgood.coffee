@@ -20,6 +20,11 @@ const Recipe = () => {
     hzMouseScroll.current.scrollLeft += event.deltaY;
   };
 
+  const round = (value, precision) => {
+    const multiplier = Math.pow(10, precision || 0);
+    return Math.round(value * multiplier) / multiplier;
+  };
+
   const handleCoffeeChange = (event) => {
     const updatedCoffee = event.target.value * 1;
     setAmountOfCoffee(updatedCoffee);
@@ -44,10 +49,16 @@ const Recipe = () => {
           );
         })}
       </section>
-      <section>
+      <section className={styles.recipe}>
         <form>
           <label htmlFor="coffee">coffee</label>
-          <input type="number" name="coffee" id="coffee" value={amountOfCoffee} onChange={handleCoffeeChange} />
+          <input
+            type="number"
+            name="coffee"
+            id="coffee"
+            value={round(amountOfCoffee, 2)}
+            onChange={handleCoffeeChange}
+          />
           <div>
             {coffeeUnitOptions.map((unit) => (
               <label>
@@ -66,7 +77,7 @@ const Recipe = () => {
         </form>
         <form>
           <label htmlFor="water">water</label>
-          <input type="number" name="water" id="water" value={amountOfWater} onChange={handleWaterChange} />
+          <input type="number" name="water" id="water" value={round(amountOfWater, 2)} onChange={handleWaterChange} />
           <div>
             {waterUnitOptions.map((unit) => (
               <label>
@@ -83,6 +94,21 @@ const Recipe = () => {
             ))}
           </div>
         </form>
+        <div>
+          <h1>recipe details</h1>
+          <div className={styles.detailsItem}>
+            <span>ratio</span>
+            <span className={styles.fontRegular}>{ratio}</span>
+          </div>
+          <div className={styles.detailsItem}>
+            <span>water temperature</span>
+            <span className={styles.fontRegular}>{waterTemp}ºF</span>
+          </div>
+          <div className={styles.detailsItem}>
+            <span>grind size</span>
+            <span className={styles.fontRegular}>{grindSize}</span>
+          </div>
+        </div>
       </section>
     </main>
   );

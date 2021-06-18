@@ -38,4 +38,19 @@
   .methods::-webkit-scrollbar {
     display: none;
   }
+
+  .recipe {
+    @extend %button-base;
+    flex-direction: column;
+
+    .detailsItem {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1rem;
+    }
+  }
+}
+
+.fontRegular {
+  font-weight: 400;
 }
