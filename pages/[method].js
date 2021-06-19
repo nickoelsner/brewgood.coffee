@@ -108,6 +108,14 @@ const Recipe = () => {
             <span>grind size</span>
             <span className={styles.fontRegular}>{grindSize}</span>
           </div>
+          <div className={styles.detailsInstructions}>
+            <div>instructions</div>
+            <ol>
+              {instructions.map((step) => (
+                <li className={styles.fontRegular}>{step}</li>
+              ))}
+            </ol>
+          </div>
         </div>
       </section>
     </main>

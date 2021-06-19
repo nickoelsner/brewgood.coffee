@@ -42,15 +42,27 @@
   .recipe {
     @extend %button-base;
     flex-direction: column;
+    max-width: 320px;
+    margin: auto;
 
     .detailsItem {
       display: flex;
       justify-content: space-between;
       font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .detailsInstructions {
+      font-size: 1rem;
+
+      ol {
+        margin-top: 0.5rem;
+        padding-left: 1.5rem;
+      }
     }
   }
 }
 
 .fontRegular {
-  font-weight: 400;
+  font-weight: 350;
 }
