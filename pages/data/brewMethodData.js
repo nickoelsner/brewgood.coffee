@@ -104,6 +104,6 @@ export const brewData = [
   },
 ];
 
-export const coffeeUnitOptions = ["g", "oz", "Tbs", "tsp"];
+export const coffeeUnitOptions = ["g", "oz", "Tbsp", "tsp"];
 
 export const waterUnitOptions = ["g", "fl oz", "mL", "C"];

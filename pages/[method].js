@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
 import { brewData, coffeeUnitOptions, waterUnitOptions } from "./data/brewMethodData";
 import Link from "next/link";
@@ -8,13 +8,15 @@ const Recipe = () => {
   const router = useRouter();
   const { method } = router.query;
   const currentMethod = brewData.filter((m) => m.name === method)[0];
-  const { name, ratio, moxCoffee, waterTemp, grindSize, instructions } = currentMethod;
+  const { name, ratio, maxCoffee, waterTemp, grindSize, instructions } = currentMethod;
 
   const [amountOfCoffee, setAmountOfCoffee] = useState(20);
   const [coffeeUnits, setCoffeeUnits] = useState("g");
   const [amountOfWater, setAmountOfWater] = useState(amountOfCoffee * ratio);
   const [waterUnits, setWaterUnits] = useState("g");
+  console.log("amountOfCoffee :>> ", amountOfCoffee);
 
+  // allows user to scroll horizontally through the methods with the mouse wheel
   const hzMouseScroll = useRef();
   const scrollHorizontal = (event) => {
     hzMouseScroll.current.scrollLeft += event.deltaY;
@@ -24,6 +26,15 @@ const Recipe = () => {
     const multiplier = Math.pow(10, precision || 0);
     return Math.round(value * multiplier) / multiplier;
   };
+
+  // useEffect(() => {
+  //   setConvertedCoffee({
+  //     g: amountOfCoffee,
+  //     oz: amountOfCoffee / 28.3495,
+  //     Tbsp: amountOfCoffee / 5,
+  //     tsp: amountOfCoffee / 1.6667,
+  //   });
+  // }, [amountOfCoffee]);
 
   const handleCoffeeChange = (event) => {
     const updatedCoffee = event.target.value * 1;
@@ -35,6 +46,32 @@ const Recipe = () => {
     const updatedWater = event.target.value * 1;
     setAmountOfWater(updatedWater);
     setAmountOfCoffee(updatedWater / ratio);
+  };
+
+  // indecies match up with unit options [g, oz, Tbsp, tsp]
+  const coffeeUnitFactor = [1, 28.3495, 5, 1.6667];
+  const convertUnits = (sourceUnit, targetUnit, sourceValue) => {
+    console.log("props :>> ", sourceUnit, targetUnit, sourceValue);
+    const sourceIdx = coffeeUnitOptions.indexOf(sourceUnit);
+    const sourceFactor = coffeeUnitFactor[sourceIdx];
+
+    const targetIdx = coffeeUnitFactor.indexOf(targetUnit);
+    const targetFactor = coffeeUnitFactor[targetIdx];
+
+    const sourceGrams = sourceValue / sourceFactor;
+    console.log("sourceGrams :>> ", sourceGrams);
+    const convertedValue = sourceGrams * targetFactor;
+    console.log("convertedValue :>> ", convertedValue);
+    return convertedValue;
+  };
+
+  const handleCoffeeUnitsChange = (unit) => {
+    // console.log("coffeeUnits :>> ", coffeeUnits);
+    // console.log("unit :>> ", unit);
+    const convertedCoffee = convertUnits(coffeeUnits, unit, amountOfCoffee);
+    // console.log("convertedCoffee:>> ", convertedCoffee);
+    setAmountOfCoffee(convertedCoffee);
+    setCoffeeUnits(unit);
   };
 
   return (
@@ -61,13 +98,13 @@ const Recipe = () => {
           />
           <div>
             {coffeeUnitOptions.map((unit) => (
-              <label>
+              <label key={unit}>
                 <input
                   type="radio"
                   name="coffeeUnits"
                   id={unit}
                   value={unit}
-                  onChange={() => setCoffeeUnits(unit)}
+                  onChange={() => handleCoffeeUnitsChange(unit)}
                   checked={coffeeUnits === unit}
                 />
                 {unit}
