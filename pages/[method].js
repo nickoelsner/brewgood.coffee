@@ -1,12 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
-import { brewData, coffeeUnitOptions, waterUnitOptions } from "./data/brewMethodData";
+import { brewData, coffeeUnitOptions, waterUnitOptions } from "../data/brewMethodData";
 import Link from "next/link";
 import styles from "../styles/Recipe.module.scss";
 
 const Recipe = () => {
   const router = useRouter();
   const { method } = router.query;
+  console.log("method :>> ", method);
   const currentMethod = brewData.filter((m) => m.name === method)[0];
   const { name, ratio, maxCoffee, waterTemp, grindSize, instructions } = currentMethod;
 
@@ -59,9 +60,7 @@ const Recipe = () => {
     const targetFactor = coffeeUnitFactor[targetIdx];
 
     const sourceGrams = sourceValue / sourceFactor;
-    console.log("sourceGrams :>> ", sourceGrams);
     const convertedValue = sourceGrams * targetFactor;
-    console.log("convertedValue :>> ", convertedValue);
     return convertedValue;
   };
 

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import styles from "../styles/BrewMethods.module.scss";
-import { brewData } from "./data/brewMethodData";
+import { brewData } from "../data/brewMethodData";
 
 const BrewMethodCard = ({ brewMethod }) => {
   return (
