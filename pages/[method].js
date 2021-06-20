@@ -8,14 +8,14 @@ const Recipe = () => {
   const router = useRouter();
   const { method } = router.query;
   console.log("method :>> ", method);
-  const currentMethod = brewData.filter((m) => m.name === method)[0];
+  // const currentMethod = brewData.filter((m) => m.name === method)[0];
+  const currentMethod = brewData.filter((m) => m.name === "pour-over")[0];
   const { name, ratio, maxCoffee, waterTemp, grindSize, instructions } = currentMethod;
 
   const [amountOfCoffee, setAmountOfCoffee] = useState(20);
   const [coffeeUnits, setCoffeeUnits] = useState("g");
   const [amountOfWater, setAmountOfWater] = useState(amountOfCoffee * ratio);
   const [waterUnits, setWaterUnits] = useState("g");
-  console.log("amountOfCoffee :>> ", amountOfCoffee);
 
   // allows user to scroll horizontally through the methods with the mouse wheel
   const hzMouseScroll = useRef();
@@ -28,49 +28,74 @@ const Recipe = () => {
     return Math.round(value * multiplier) / multiplier;
   };
 
-  // useEffect(() => {
-  //   setConvertedCoffee({
-  //     g: amountOfCoffee,
-  //     oz: amountOfCoffee / 28.3495,
-  //     Tbsp: amountOfCoffee / 5,
-  //     tsp: amountOfCoffee / 1.6667,
-  //   });
-  // }, [amountOfCoffee]);
-
   const handleCoffeeChange = (event) => {
     const updatedCoffee = event.target.value * 1;
     setAmountOfCoffee(updatedCoffee);
-    setAmountOfWater(updatedCoffee * ratio);
+    setAmountOfWater(round(updatedCoffee * ratio, 2));
   };
 
   const handleWaterChange = (event) => {
     const updatedWater = event.target.value * 1;
     setAmountOfWater(updatedWater);
-    setAmountOfCoffee(updatedWater / ratio);
+    setAmountOfCoffee(round(updatedWater / ratio, 2));
   };
 
   // indecies match up with unit options [g, oz, Tbsp, tsp]
-  const coffeeUnitFactor = [1, 28.3495, 5, 1.6667];
-  const convertUnits = (sourceUnit, targetUnit, sourceValue) => {
-    console.log("props :>> ", sourceUnit, targetUnit, sourceValue);
+  const coffeeUnitFactor = [1, 0.035274, 0.2, 0.066667];
+  const convertCoffeeUnits = (sourceUnit, targetUnit, sourceValue) => {
     const sourceIdx = coffeeUnitOptions.indexOf(sourceUnit);
     const sourceFactor = coffeeUnitFactor[sourceIdx];
 
-    const targetIdx = coffeeUnitFactor.indexOf(targetUnit);
+    const targetIdx = coffeeUnitOptions.indexOf(targetUnit);
     const targetFactor = coffeeUnitFactor[targetIdx];
 
     const sourceGrams = sourceValue / sourceFactor;
     const convertedValue = sourceGrams * targetFactor;
-    return convertedValue;
+    return [convertedValue, sourceGrams];
+  };
+
+  // indecies match up with unit options [g, fl oz, mL, C]
+  const waterUnitFactor = [1, 0.0338, 1, 0.00423];
+  const convertWaterUnits = (sourceUnit, targetUnit, sourceValue) => {
+    const sourceIdx = waterUnitOptions.indexOf(sourceUnit);
+    const sourceFactor = waterUnitFactor[sourceIdx];
+
+    const targetIdx = waterUnitOptions.indexOf(targetUnit);
+    const targetFactor = waterUnitFactor[targetIdx];
+
+    const sourceGrams = sourceValue / sourceFactor;
+    const convertedValue = sourceGrams * targetFactor;
+    return [convertedValue, sourceGrams];
   };
 
   const handleCoffeeUnitsChange = (unit) => {
-    // console.log("coffeeUnits :>> ", coffeeUnits);
-    // console.log("unit :>> ", unit);
-    const convertedCoffee = convertUnits(coffeeUnits, unit, amountOfCoffee);
-    // console.log("convertedCoffee:>> ", convertedCoffee);
-    setAmountOfCoffee(convertedCoffee);
+    // function returns the converted amount of coffee (index 0) and the amount in grams (index 1)
+    const convertedCoffee = convertCoffeeUnits(coffeeUnits, unit, amountOfCoffee);
+
+    // multiply amount of coffee in grams by ratio, then convert to current units of water
+    const convertedWater = convertWaterUnits("g", waterUnits, convertedCoffee[1] * ratio);
+    console.log("convertedWater :>> ", convertedWater);
+
+    // update coffee, coffee units, and water
+    setAmountOfCoffee(round(convertedCoffee[0], 2));
     setCoffeeUnits(unit);
+    setAmountOfWater(round(convertedWater[0], 2));
+  };
+
+  const handleWaterUnitsChange = (unit) => {
+    // function returns the converted amount of water (index 0) and the amount in grams (index 1)
+    const convertedWater = convertWaterUnits(waterUnits, unit, amountOfWater);
+    console.log("waterUnits, unit, amountOfWater :>> ", waterUnits, unit, amountOfWater);
+    console.log("convertedWater :>> ", convertedWater);
+
+    // divide amount of water in grams by ratio, then convert to current units of coffee
+    const convertedCoffee = convertCoffeeUnits("g", coffeeUnits, convertedWater[1] / ratio);
+    console.log("convertedWater :>> ", convertedWater);
+
+    // update water, water units, and coffee
+    setAmountOfWater(round(convertedWater[0], 2));
+    setWaterUnits(unit);
+    setAmountOfCoffee(round(convertedCoffee[0], 2));
   };
 
   return (
@@ -88,13 +113,7 @@ const Recipe = () => {
       <section className={styles.recipe}>
         <form>
           <label htmlFor="coffee">coffee</label>
-          <input
-            type="number"
-            name="coffee"
-            id="coffee"
-            value={round(amountOfCoffee, 2)}
-            onChange={handleCoffeeChange}
-          />
+          <input type="number" name="coffee" id="coffee" value={amountOfCoffee} onChange={handleCoffeeChange} />
           <div>
             {coffeeUnitOptions.map((unit) => (
               <label key={unit}>
@@ -113,16 +132,16 @@ const Recipe = () => {
         </form>
         <form>
           <label htmlFor="water">water</label>
-          <input type="number" name="water" id="water" value={round(amountOfWater, 2)} onChange={handleWaterChange} />
+          <input type="number" name="water" id="water" value={amountOfWater} onChange={handleWaterChange} />
           <div>
             {waterUnitOptions.map((unit) => (
-              <label>
+              <label key={unit}>
                 <input
                   type="radio"
                   name="waterUnits"
                   id={unit}
                   value={unit}
-                  onChange={() => setWaterUnits(unit)}
+                  onChange={() => handleWaterUnitsChange(unit)}
                   checked={waterUnits === unit}
                 />
                 {unit}
@@ -147,8 +166,10 @@ const Recipe = () => {
           <div className={styles.detailsInstructions}>
             <div>instructions</div>
             <ol>
-              {instructions.map((step) => (
-                <li className={styles.fontRegular}>{step}</li>
+              {instructions.map((step, idx) => (
+                <li key={idx} className={styles.fontRegular}>
+                  {step}
+                </li>
               ))}
             </ol>
           </div>
