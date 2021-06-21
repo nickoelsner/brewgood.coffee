@@ -12,18 +12,19 @@
     padding: 4px 0;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    margin-bottom: 1rem;
 
     .button {
       border: 3px solid $color-primary;
       background-color: white;
-      padding: 0.25rem 0.5rem;
+      padding: 0.75rem;
       border-radius: 0.75rem;
       font-weight: 600;
       font-size: 1rem;
       display: flex;
       flex-direction: row;
       align-items: center;
-      height: 2rem;
+      height: 36px;
       box-shadow: 3px 3px 0px $color-primary;
       white-space: nowrap;
     }
@@ -44,6 +45,7 @@
     flex-direction: column;
     max-width: 320px;
     margin: auto;
+    padding: 0;
 
     .detailsItem {
       display: flex;
@@ -60,6 +62,66 @@
         padding-left: 1.5rem;
       }
     }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      border-bottom: 2px solid $color-primary;
+
+      .heading {
+        font-size: 1.5rem;
+      }
+
+      .amountContainer {
+        display: flex;
+        align-items: flex-end;
+        padding: 1rem 0;
+
+        input {
+          font-size: 3.5rem;
+          width: 100%;
+          font-weight: bold;
+          color: $color-primary;
+          font-family: inherit;
+          border: none;
+        }
+
+        span {
+          font-size: 2.5rem;
+          color: $color-secondary;
+        }
+      }
+
+      .unitsContainer {
+        display: flex;
+        justify-content: space-between;
+
+        label {
+          font-size: 1.25rem;
+          color: $color-secondary;
+          border: 2px solid white;
+          border-radius: 0.75rem;
+          padding: 5px 12px;
+        }
+
+        input[type="radio"] {
+          position: fixed;
+          opacity: 0;
+          pointer-events: none;
+        }
+
+        .selected {
+          border-color: $color-secondary;
+
+          background-color: rgba(129, 97, 87, 0.12);
+        }
+      }
+    }
+  }
+
+  .recipe > * {
+    padding: 0.75rem;
   }
 }
 

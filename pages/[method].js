@@ -12,7 +12,7 @@ const Recipe = () => {
   const currentMethod = brewData.filter((m) => m.name === "pour-over")[0];
   const { name, ratio, maxCoffee, waterTemp, grindSize, instructions } = currentMethod;
 
-  const [amountOfCoffee, setAmountOfCoffee] = useState(20);
+  const [amountOfCoffee, setAmountOfCoffee] = useState(20.0);
   const [coffeeUnits, setCoffeeUnits] = useState("g");
   const [amountOfWater, setAmountOfWater] = useState(amountOfCoffee * ratio);
   const [waterUnits, setWaterUnits] = useState("g");
@@ -112,11 +112,16 @@ const Recipe = () => {
       </section>
       <section className={styles.recipe}>
         <form>
-          <label htmlFor="coffee">coffee</label>
-          <input type="number" name="coffee" id="coffee" value={amountOfCoffee} onChange={handleCoffeeChange} />
-          <div>
+          <label className={styles.heading} htmlFor="coffee">
+            coffee
+          </label>
+          <div className={styles.amountContainer}>
+            <input type="number" name="coffee" id="coffee" value={amountOfCoffee} onChange={handleCoffeeChange} />
+            <span>{coffeeUnits}</span>
+          </div>
+          <div className={styles.unitsContainer}>
             {coffeeUnitOptions.map((unit) => (
-              <label key={unit}>
+              <label key={unit} className={coffeeUnits === unit ? styles.selected : ""}>
                 <input
                   type="radio"
                   name="coffeeUnits"
@@ -131,11 +136,16 @@ const Recipe = () => {
           </div>
         </form>
         <form>
-          <label htmlFor="water">water</label>
-          <input type="number" name="water" id="water" value={amountOfWater} onChange={handleWaterChange} />
-          <div>
+          <label className={styles.heading} htmlFor="water">
+            water
+          </label>
+          <div className={styles.amountContainer}>
+            <input type="number" name="water" id="water" value={amountOfWater} onChange={handleWaterChange} />
+            <span>{waterUnits}</span>
+          </div>
+          <div className={styles.unitsContainer}>
             {waterUnitOptions.map((unit) => (
-              <label key={unit}>
+              <label key={unit} className={waterUnits === unit ? styles.selected : ""}>
                 <input
                   type="radio"
                   name="waterUnits"
