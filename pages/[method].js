@@ -8,13 +8,17 @@ const Recipe = () => {
   const router = useRouter();
   const { method } = router.query;
   console.log("method :>> ", method);
-  // const currentMethod = brewData.filter((m) => m.name === method)[0];
-  const currentMethod = brewData.filter((m) => m.name === "pour-over")[0];
+  // let currentMethod = {};
+  // if (method) {
+  //   currentMethod = brewData.filter((m) => m.name === method)[0];
+  // }
+  const currentMethod = brewData.filter((m) => m.name === method)[0] || {};
+  // const currentMethod = brewData.filter((m) => m.name === "pour-over")[0];
   const { name, ratio, maxCoffee, waterTemp, grindSize, instructions } = currentMethod;
 
   const [amountOfCoffee, setAmountOfCoffee] = useState(20.0);
   const [coffeeUnits, setCoffeeUnits] = useState("g");
-  const [amountOfWater, setAmountOfWater] = useState(amountOfCoffee * ratio);
+  const [amountOfWater, setAmountOfWater] = useState(amountOfCoffee * (currentMethod ? ratio : 5));
   const [waterUnits, setWaterUnits] = useState("g");
 
   // allows user to scroll horizontally through the methods with the mouse wheel
@@ -98,95 +102,99 @@ const Recipe = () => {
     setAmountOfCoffee(round(convertedCoffee[0], 2));
   };
 
-  return (
-    <main className={styles.container}>
-      <section className={styles.methods} onWheel={scrollHorizontal} ref={hzMouseScroll}>
-        {brewData.map((brewMethod, idx) => {
-          const selected = name === brewMethod.name ? styles.selected : "";
-          return (
-            <Link href={`/${brewMethod.name}`} key={idx}>
-              <a className={`${styles.button} ${selected}`}>{brewMethod.name}</a>
-            </Link>
-          );
-        })}
-      </section>
-      <section className={styles.recipe}>
-        <form>
-          <label className={styles.heading} htmlFor="coffee">
-            coffee
-          </label>
-          <div className={styles.amountContainer}>
-            <input type="number" name="coffee" id="coffee" value={amountOfCoffee} onChange={handleCoffeeChange} />
-            <span>{coffeeUnits}</span>
-          </div>
-          <div className={styles.unitsContainer}>
-            {coffeeUnitOptions.map((unit) => (
-              <label key={unit} className={coffeeUnits === unit ? styles.selected : ""}>
-                <input
-                  type="radio"
-                  name="coffeeUnits"
-                  id={unit}
-                  value={unit}
-                  onChange={() => handleCoffeeUnitsChange(unit)}
-                  checked={coffeeUnits === unit}
-                />
-                {unit}
-              </label>
-            ))}
-          </div>
-        </form>
-        <form>
-          <label className={styles.heading} htmlFor="water">
-            water
-          </label>
-          <div className={styles.amountContainer}>
-            <input type="number" name="water" id="water" value={amountOfWater} onChange={handleWaterChange} />
-            <span>{waterUnits}</span>
-          </div>
-          <div className={styles.unitsContainer}>
-            {waterUnitOptions.map((unit) => (
-              <label key={unit} className={waterUnits === unit ? styles.selected : ""}>
-                <input
-                  type="radio"
-                  name="waterUnits"
-                  id={unit}
-                  value={unit}
-                  onChange={() => handleWaterUnitsChange(unit)}
-                  checked={waterUnits === unit}
-                />
-                {unit}
-              </label>
-            ))}
-          </div>
-        </form>
-        <div>
-          <h1>recipe details</h1>
-          <div className={styles.detailsItem}>
-            <span>ratio</span>
-            <span className={styles.fontRegular}>{ratio}</span>
-          </div>
-          <div className={styles.detailsItem}>
-            <span>water temperature</span>
-            <span className={styles.fontRegular}>{waterTemp}ºF</span>
-          </div>
-          <div className={styles.detailsItem}>
-            <span>grind size</span>
-            <span className={styles.fontRegular}>{grindSize}</span>
-          </div>
-          <div className={styles.detailsInstructions}>
-            <div>instructions</div>
-            <ol>
-              {instructions.map((step, idx) => (
-                <li key={idx} className={styles.fontRegular}>
-                  {step}
-                </li>
+  if (!method) {
+    return <div>loading...</div>;
+  } else {
+    return (
+      <main className={styles.container}>
+        <section className={styles.methods} onWheel={scrollHorizontal} ref={hzMouseScroll}>
+          {brewData.map((brewMethod, idx) => {
+            const selected = name === brewMethod.name ? styles.selected : "";
+            return (
+              <Link href={`/${brewMethod.name}`} key={idx}>
+                <a className={`${styles.button} ${selected}`}>{brewMethod.name}</a>
+              </Link>
+            );
+          })}
+        </section>
+        <section className={styles.recipe}>
+          <form>
+            <label className={styles.heading} htmlFor="coffee">
+              coffee
+            </label>
+            <div className={styles.amountContainer}>
+              <input type="number" name="coffee" id="coffee" value={amountOfCoffee} onChange={handleCoffeeChange} />
+              <span>{coffeeUnits}</span>
+            </div>
+            <div className={styles.unitsContainer}>
+              {coffeeUnitOptions.map((unit) => (
+                <label key={unit} className={coffeeUnits === unit ? styles.selected : ""}>
+                  <input
+                    type="radio"
+                    name="coffeeUnits"
+                    id={unit}
+                    value={unit}
+                    onChange={() => handleCoffeeUnitsChange(unit)}
+                    checked={coffeeUnits === unit}
+                  />
+                  {unit}
+                </label>
               ))}
-            </ol>
+            </div>
+          </form>
+          <form>
+            <label className={styles.heading} htmlFor="water">
+              water
+            </label>
+            <div className={styles.amountContainer}>
+              <input type="number" name="water" id="water" value={amountOfWater} onChange={handleWaterChange} />
+              <span>{waterUnits}</span>
+            </div>
+            <div className={styles.unitsContainer}>
+              {waterUnitOptions.map((unit) => (
+                <label key={unit} className={waterUnits === unit ? styles.selected : ""}>
+                  <input
+                    type="radio"
+                    name="waterUnits"
+                    id={unit}
+                    value={unit}
+                    onChange={() => handleWaterUnitsChange(unit)}
+                    checked={waterUnits === unit}
+                  />
+                  {unit}
+                </label>
+              ))}
+            </div>
+          </form>
+          <div>
+            <h1>recipe details</h1>
+            <div className={styles.detailsItem}>
+              <span>ratio</span>
+              <span className={styles.fontRegular}>{ratio}</span>
+            </div>
+            <div className={styles.detailsItem}>
+              <span>water temperature</span>
+              <span className={styles.fontRegular}>{waterTemp}ºF</span>
+            </div>
+            <div className={styles.detailsItem}>
+              <span>grind size</span>
+              <span className={styles.fontRegular}>{grindSize}</span>
+            </div>
+            <div className={styles.detailsInstructions}>
+              <div>instructions</div>
+              <ol>
+                {instructions.map((step, idx) => (
+                  <li key={idx} className={styles.fontRegular}>
+                    {step}
+                  </li>
+                ))}
+              </ol>
+            </div>
           </div>
-        </div>
-      </section>
-    </main>
-  );
+        </section>
+      </main>
+    );
+  }
 };
 
 export default Recipe;
