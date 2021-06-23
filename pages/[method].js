@@ -14,11 +14,21 @@ const Recipe = () => {
   const [coffeeUnits, setCoffeeUnits] = useState("g");
   const [amountOfWater, setAmountOfWater] = useState(0);
   const [waterUnits, setWaterUnits] = useState("g");
+  const [coffeeInputLength, setCoffeeInputLength] = useState(48);
+  const [waterInputLength, setWaterInputLength] = useState(72);
 
   useEffect(() => {
     setAmountOfCoffee(currentMethod.startingCoffee);
     setAmountOfWater(currentMethod.startingWater);
   }, [currentMethod]);
+
+  useEffect(() => {
+    setCoffeeInputLength(amountOfCoffee.toString().length * 48);
+  }, [amountOfCoffee]);
+
+  useEffect(() => {
+    setWaterInputLength(amountOfWater.toString().length * 48);
+  }, [amountOfWater]);
 
   // allows user to scroll horizontally through the methods with the mouse wheel
   const hzMouseScroll = useRef();
@@ -70,7 +80,7 @@ const Recipe = () => {
 
     // update coffee, coffee units, and water
     setAmountOfCoffee(updatedCoffee);
-    setAmountOfWater(round(convertedWater[0], 2));
+    setAmountOfWater(round(convertedWater[0], 1));
   };
 
   const handleWaterChange = (event) => {
@@ -84,7 +94,7 @@ const Recipe = () => {
 
     // update coffee and water
     setAmountOfWater(updatedWater);
-    setAmountOfCoffee(round(convertedCoffee[0], 2));
+    setAmountOfCoffee(round(convertedCoffee[0], 1));
   };
 
   const handleCoffeeUnitsChange = (unit) => {
@@ -95,9 +105,9 @@ const Recipe = () => {
     const convertedWater = convertWaterUnits("g", waterUnits, convertedCoffee[1] * ratio);
 
     // update coffee, coffee units, and water
-    setAmountOfCoffee(round(convertedCoffee[0], 2));
+    setAmountOfCoffee(round(convertedCoffee[0], 1));
     setCoffeeUnits(unit);
-    setAmountOfWater(round(convertedWater[0], 2));
+    setAmountOfWater(round(convertedWater[0], 1));
   };
 
   const handleWaterUnitsChange = (unit) => {
@@ -109,11 +119,10 @@ const Recipe = () => {
     const convertedCoffee = convertCoffeeUnits("g", coffeeUnits, convertedWater[1] / ratio);
 
     // update water, water units, and coffee
-    setAmountOfWater(round(convertedWater[0], 2));
+    setAmountOfWater(round(convertedWater[0], 1));
     setWaterUnits(unit);
-    setAmountOfCoffee(round(convertedCoffee[0], 2));
+    setAmountOfCoffee(round(convertedCoffee[0], 1));
   };
-
   if (!method) {
     return <div>loading...</div>;
   } else {
@@ -135,7 +144,14 @@ const Recipe = () => {
               coffee
             </label>
             <div className={styles.amountContainer}>
-              <input type="number" name="coffee" id="coffee" value={amountOfCoffee} onChange={handleCoffeeChange} />
+              <input
+                type="number"
+                name="coffee"
+                id="coffee"
+                value={amountOfCoffee}
+                onChange={handleCoffeeChange}
+                // style={{ width: `${coffeeInputLength}px` }}
+              />
               <span>{coffeeUnits}</span>
             </div>
             <div className={styles.unitsContainer}>
@@ -159,7 +175,14 @@ const Recipe = () => {
               water
             </label>
             <div className={styles.amountContainer}>
-              <input type="number" name="water" id="water" value={amountOfWater} onChange={handleWaterChange} />
+              <input
+                type="number"
+                name="water"
+                id="water"
+                value={amountOfWater}
+                onChange={handleWaterChange}
+                // style={{ width: `${waterInputLength}px` }}
+              />
               <span>{waterUnits}</span>
             </div>
             <div className={styles.unitsContainer}>
@@ -179,7 +202,7 @@ const Recipe = () => {
             </div>
           </form>
           <div>
-            <h1>recipe details</h1>
+            <h1 className={styles.heading}>recipe details</h1>
             <div className={styles.detailsItem}>
               <span>ratio</span>
               <span className={styles.fontRegular}>{ratio}</span>
