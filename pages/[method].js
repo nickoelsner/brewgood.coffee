@@ -14,21 +14,11 @@ const Recipe = () => {
   const [coffeeUnits, setCoffeeUnits] = useState("g");
   const [amountOfWater, setAmountOfWater] = useState(0);
   const [waterUnits, setWaterUnits] = useState("g");
-  const [coffeeInputLength, setCoffeeInputLength] = useState(48);
-  const [waterInputLength, setWaterInputLength] = useState(72);
 
   useEffect(() => {
     setAmountOfCoffee(currentMethod.startingCoffee);
     setAmountOfWater(currentMethod.startingWater);
   }, [currentMethod]);
-
-  useEffect(() => {
-    setCoffeeInputLength(amountOfCoffee.toString().length * 48);
-  }, [amountOfCoffee]);
-
-  useEffect(() => {
-    setWaterInputLength(amountOfWater.toString().length * 48);
-  }, [amountOfWater]);
 
   // allows user to scroll horizontally through the methods with the mouse wheel
   const hzMouseScroll = useRef();
@@ -80,7 +70,7 @@ const Recipe = () => {
 
     // update coffee, coffee units, and water
     setAmountOfCoffee(updatedCoffee);
-    setAmountOfWater(round(convertedWater[0], 1));
+    setAmountOfWater(convertedWater[0].toFixed(2));
   };
 
   const handleWaterChange = (event) => {
@@ -94,7 +84,7 @@ const Recipe = () => {
 
     // update coffee and water
     setAmountOfWater(updatedWater);
-    setAmountOfCoffee(round(convertedCoffee[0], 1));
+    setAmountOfCoffee(convertedCoffee[0].toFixed(2));
   };
 
   const handleCoffeeUnitsChange = (unit) => {
@@ -105,9 +95,9 @@ const Recipe = () => {
     const convertedWater = convertWaterUnits("g", waterUnits, convertedCoffee[1] * ratio);
 
     // update coffee, coffee units, and water
-    setAmountOfCoffee(round(convertedCoffee[0], 1));
+    setAmountOfCoffee(convertedCoffee[0].toFixed(2));
     setCoffeeUnits(unit);
-    setAmountOfWater(round(convertedWater[0], 1));
+    setAmountOfWater(convertedWater[0].toFixed(2));
   };
 
   const handleWaterUnitsChange = (unit) => {
@@ -119,9 +109,9 @@ const Recipe = () => {
     const convertedCoffee = convertCoffeeUnits("g", coffeeUnits, convertedWater[1] / ratio);
 
     // update water, water units, and coffee
-    setAmountOfWater(round(convertedWater[0], 1));
+    setAmountOfWater(convertedWater[0].toFixed(2));
     setWaterUnits(unit);
-    setAmountOfCoffee(round(convertedCoffee[0], 1));
+    setAmountOfCoffee(convertedCoffee[0].toFixed(2));
   };
   if (!method) {
     return <div>loading...</div>;
