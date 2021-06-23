@@ -7,19 +7,18 @@ import styles from "../styles/Recipe.module.scss";
 const Recipe = () => {
   const router = useRouter();
   const { method } = router.query;
-  console.log("method :>> ", method);
-  // let currentMethod = {};
-  // if (method) {
-  //   currentMethod = brewData.filter((m) => m.name === method)[0];
-  // }
   const currentMethod = brewData.filter((m) => m.name === method)[0] || {};
-  // const currentMethod = brewData.filter((m) => m.name === "pour-over")[0];
   const { name, ratio, maxCoffee, waterTemp, grindSize, instructions } = currentMethod;
 
-  const [amountOfCoffee, setAmountOfCoffee] = useState(20.0);
+  const [amountOfCoffee, setAmountOfCoffee] = useState(0);
   const [coffeeUnits, setCoffeeUnits] = useState("g");
-  const [amountOfWater, setAmountOfWater] = useState(amountOfCoffee * (currentMethod ? ratio : 5));
+  const [amountOfWater, setAmountOfWater] = useState(0);
   const [waterUnits, setWaterUnits] = useState("g");
+
+  useEffect(() => {
+    setAmountOfCoffee(currentMethod.startingCoffee);
+    setAmountOfWater(currentMethod.startingWater);
+  }, [currentMethod]);
 
   // allows user to scroll horizontally through the methods with the mouse wheel
   const hzMouseScroll = useRef();
@@ -30,18 +29,6 @@ const Recipe = () => {
   const round = (value, precision) => {
     const multiplier = Math.pow(10, precision || 0);
     return Math.round(value * multiplier) / multiplier;
-  };
-
-  const handleCoffeeChange = (event) => {
-    const updatedCoffee = event.target.value * 1;
-    setAmountOfCoffee(updatedCoffee);
-    setAmountOfWater(round(updatedCoffee * ratio, 2));
-  };
-
-  const handleWaterChange = (event) => {
-    const updatedWater = event.target.value * 1;
-    setAmountOfWater(updatedWater);
-    setAmountOfCoffee(round(updatedWater / ratio, 2));
   };
 
   // indecies match up with unit options [g, oz, Tbsp, tsp]
@@ -72,13 +59,40 @@ const Recipe = () => {
     return [convertedValue, sourceGrams];
   };
 
+  const handleCoffeeChange = (event) => {
+    const updatedCoffee = event.target.value * 1;
+
+    // function gives the amount of coffee in grams as index 1 -> [..., grams of coffee]
+    const convertedCoffee = convertCoffeeUnits(coffeeUnits, "g", updatedCoffee);
+
+    // multiply amount of coffee in grams by ratio, then convert to current units of water
+    const convertedWater = convertWaterUnits("g", waterUnits, convertedCoffee[1] * ratio);
+
+    // update coffee, coffee units, and water
+    setAmountOfCoffee(updatedCoffee);
+    setAmountOfWater(round(convertedWater[0], 2));
+  };
+
+  const handleWaterChange = (event) => {
+    const updatedWater = event.target.value * 1;
+
+    // function gives the amount of water in grams as index 1 -> [..., grams of water]
+    const convertedWater = convertWaterUnits(waterUnits, "g", updatedWater);
+
+    // divide amount of water in grams by ratio, then convert to current units of coffee
+    const convertedCoffee = convertCoffeeUnits("g", coffeeUnits, convertedWater[1] / ratio);
+
+    // update coffee and water
+    setAmountOfWater(updatedWater);
+    setAmountOfCoffee(round(convertedCoffee[0], 2));
+  };
+
   const handleCoffeeUnitsChange = (unit) => {
     // function returns the converted amount of coffee (index 0) and the amount in grams (index 1)
     const convertedCoffee = convertCoffeeUnits(coffeeUnits, unit, amountOfCoffee);
 
     // multiply amount of coffee in grams by ratio, then convert to current units of water
     const convertedWater = convertWaterUnits("g", waterUnits, convertedCoffee[1] * ratio);
-    console.log("convertedWater :>> ", convertedWater);
 
     // update coffee, coffee units, and water
     setAmountOfCoffee(round(convertedCoffee[0], 2));
@@ -87,14 +101,12 @@ const Recipe = () => {
   };
 
   const handleWaterUnitsChange = (unit) => {
+    console.log("here");
     // function returns the converted amount of water (index 0) and the amount in grams (index 1)
     const convertedWater = convertWaterUnits(waterUnits, unit, amountOfWater);
-    console.log("waterUnits, unit, amountOfWater :>> ", waterUnits, unit, amountOfWater);
-    console.log("convertedWater :>> ", convertedWater);
 
     // divide amount of water in grams by ratio, then convert to current units of coffee
     const convertedCoffee = convertCoffeeUnits("g", coffeeUnits, convertedWater[1] / ratio);
-    console.log("convertedWater :>> ", convertedWater);
 
     // update water, water units, and coffee
     setAmountOfWater(round(convertedWater[0], 2));
