@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        <h1 className={styles.title}>welcome to brewratio.coffee</h1>
+        <h1 className={styles.title}>recipes for brewing the perfect cup of coffee</h1>
         <img src="/assets/images/Logo.svg" alt="coffee cup logo" className={styles.logo} />
         <Link href="/brewMethods">
           <a className={styles.button}>

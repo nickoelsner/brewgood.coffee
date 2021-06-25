@@ -5,6 +5,10 @@
   min-height: 100vh;
   padding: 5vh 1rem;
 
+  h1 {
+    text-align: center;
+  }
+
   .methods {
     display: flex;
     overflow-x: auto;

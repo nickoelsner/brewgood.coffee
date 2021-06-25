@@ -16,8 +16,10 @@ const Recipe = () => {
   const [waterUnits, setWaterUnits] = useState("g");
 
   useEffect(() => {
-    setAmountOfCoffee(currentMethod.startingCoffee);
-    setAmountOfWater(currentMethod.startingWater);
+    const convertedStartingCoffee = convertCoffeeUnits("g", coffeeUnits, currentMethod.startingCoffee);
+    const convertedStartingWater = convertWaterUnits("g", waterUnits, currentMethod.startingWater);
+    setAmountOfCoffee(convertedStartingCoffee[0].toFixed(1));
+    setAmountOfWater(convertedStartingWater[0].toFixed(1));
   }, [currentMethod]);
 
   // allows user to scroll horizontally through the methods with the mouse wheel
@@ -32,7 +34,7 @@ const Recipe = () => {
   };
 
   // indecies match up with unit options [g, oz, Tbsp, tsp]
-  const coffeeUnitFactor = [1, 0.035274, 0.2, 0.066667];
+  const coffeeUnitFactor = [1, 0.035274, 0.2, 1.66667];
   const convertCoffeeUnits = (sourceUnit, targetUnit, sourceValue) => {
     const sourceIdx = coffeeUnitOptions.indexOf(sourceUnit);
     const sourceFactor = coffeeUnitFactor[sourceIdx];
@@ -70,7 +72,7 @@ const Recipe = () => {
 
     // update coffee, coffee units, and water
     setAmountOfCoffee(updatedCoffee);
-    setAmountOfWater(convertedWater[0].toFixed(2));
+    setAmountOfWater(convertedWater[0].toFixed(1));
   };
 
   const handleWaterChange = (event) => {
@@ -84,7 +86,7 @@ const Recipe = () => {
 
     // update coffee and water
     setAmountOfWater(updatedWater);
-    setAmountOfCoffee(convertedCoffee[0].toFixed(2));
+    setAmountOfCoffee(convertedCoffee[0].toFixed(1));
   };
 
   const handleCoffeeUnitsChange = (unit) => {
@@ -95,9 +97,9 @@ const Recipe = () => {
     const convertedWater = convertWaterUnits("g", waterUnits, convertedCoffee[1] * ratio);
 
     // update coffee, coffee units, and water
-    setAmountOfCoffee(convertedCoffee[0].toFixed(2));
+    setAmountOfCoffee(convertedCoffee[0].toFixed(1));
     setCoffeeUnits(unit);
-    setAmountOfWater(convertedWater[0].toFixed(2));
+    setAmountOfWater(convertedWater[0].toFixed(1));
   };
 
   const handleWaterUnitsChange = (unit) => {
@@ -109,10 +111,11 @@ const Recipe = () => {
     const convertedCoffee = convertCoffeeUnits("g", coffeeUnits, convertedWater[1] / ratio);
 
     // update water, water units, and coffee
-    setAmountOfWater(convertedWater[0].toFixed(2));
+    setAmountOfWater(convertedWater[0].toFixed(1));
     setWaterUnits(unit);
-    setAmountOfCoffee(convertedCoffee[0].toFixed(2));
+    setAmountOfCoffee(convertedCoffee[0].toFixed(1));
   };
+  console.log("currentMethod.notes :>> ", currentMethod.notes);
   if (!method) {
     return <div>loading...</div>;
   } else {
@@ -215,6 +218,18 @@ const Recipe = () => {
                 ))}
               </ol>
             </div>
+            {currentMethod.notes && (
+              <div className={styles.detailsInstructions}>
+                <div>additional notes</div>
+                <ul>
+                  {currentMethod.notes.map((note, idx) => (
+                    <li key={idx} className={styles.fontRegular}>
+                      {note}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </section>
       </main>
