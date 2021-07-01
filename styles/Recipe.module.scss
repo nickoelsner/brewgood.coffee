@@ -64,6 +64,14 @@
       white-space: nowrap;
     }
 
+    .button:hover,
+    .button:focus {
+      box-shadow: none;
+      transform: translate(3px, 3px);
+      transition: all 0.1s ease;
+      outline: none;
+    }
+
     .selected {
       background-color: $color-secondary;
       color: white;
@@ -82,6 +90,10 @@
     max-width: 320px;
     margin: auto;
     padding: 0;
+
+    @media only screen and (min-width: 336px) {
+      max-width: 704px;
+    }
 
     .detailsItem {
       display: flex;
@@ -150,6 +162,11 @@
       .unitsContainer {
         display: flex;
         justify-content: space-between;
+
+        @media only screen and (min-width: 376px) {
+          justify-content: flex-end;
+          gap: 1rem;
+        }
 
         label {
           font-size: 1.25rem;

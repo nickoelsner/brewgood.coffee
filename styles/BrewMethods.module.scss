@@ -17,6 +17,10 @@
       display: grid;
       grid-template-columns: repeat(2, auto);
       gap: 1.2rem;
+
+      @media only screen and (min-width: 500px) {
+        gap: 3rem;
+      }
     }
 
     .button {
@@ -33,6 +37,13 @@
         width: auto;
         margin-bottom: 0.5rem;
       }
+    }
+
+    .button:hover,
+    .button:focus {
+      box-shadow: none;
+      transform: translate(4px, 4px);
+      transition: all 0.1s ease;
     }
   }
 }
