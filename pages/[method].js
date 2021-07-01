@@ -14,6 +14,7 @@ const Recipe = () => {
   const [coffeeUnits, setCoffeeUnits] = useState("g");
   const [amountOfWater, setAmountOfWater] = useState(0);
   const [waterUnits, setWaterUnits] = useState("g");
+  const [expandedDetails, setExpandedDetails] = useState(true);
 
   useEffect(() => {
     const convertedStartingCoffee = convertCoffeeUnits("g", coffeeUnits, currentMethod.startingCoffee);
@@ -103,7 +104,6 @@ const Recipe = () => {
   };
 
   const handleWaterUnitsChange = (unit) => {
-    console.log("here");
     // function returns the converted amount of water (index 0) and the amount in grams (index 1)
     const convertedWater = convertWaterUnits(waterUnits, unit, amountOfWater);
 
@@ -115,7 +115,9 @@ const Recipe = () => {
     setWaterUnits(unit);
     setAmountOfCoffee(convertedCoffee[0].toFixed(1));
   };
-  console.log("currentMethod.notes :>> ", currentMethod.notes);
+
+  console.log("expandedDetails :>> ", expandedDetails);
+
   if (!method) {
     return <div>loading...</div>;
   } else {
@@ -137,14 +139,7 @@ const Recipe = () => {
               coffee
             </label>
             <div className={styles.amountContainer}>
-              <input
-                type="number"
-                name="coffee"
-                id="coffee"
-                value={amountOfCoffee}
-                onChange={handleCoffeeChange}
-                // style={{ width: `${coffeeInputLength}px` }}
-              />
+              <input type="number" name="coffee" id="coffee" value={amountOfCoffee} onChange={handleCoffeeChange} />
               <span>{coffeeUnits}</span>
             </div>
             <div className={styles.unitsContainer}>
@@ -168,14 +163,7 @@ const Recipe = () => {
               water
             </label>
             <div className={styles.amountContainer}>
-              <input
-                type="number"
-                name="water"
-                id="water"
-                value={amountOfWater}
-                onChange={handleWaterChange}
-                // style={{ width: `${waterInputLength}px` }}
-              />
+              <input type="number" name="water" id="water" value={amountOfWater} onChange={handleWaterChange} />
               <span>{waterUnits}</span>
             </div>
             <div className={styles.unitsContainer}>
@@ -194,40 +182,50 @@ const Recipe = () => {
               ))}
             </div>
           </form>
-          <div>
-            <h1 className={styles.heading}>recipe details</h1>
-            <div className={styles.detailsItem}>
-              <span>ratio</span>
-              <span className={styles.fontRegular}>{ratio}</span>
-            </div>
-            <div className={styles.detailsItem}>
-              <span>water temperature</span>
-              <span className={styles.fontRegular}>{waterTemp}ºF</span>
-            </div>
-            <div className={styles.detailsItem}>
-              <span>grind size</span>
-              <span className={styles.fontRegular}>{grindSize}</span>
-            </div>
-            <div className={styles.detailsInstructions}>
-              <div>instructions</div>
-              <ol>
-                {instructions.map((step, idx) => (
-                  <li key={idx} className={styles.fontRegular}>
-                    {step}
-                  </li>
-                ))}
-              </ol>
-            </div>
-            {currentMethod.notes && (
-              <div className={styles.detailsInstructions}>
-                <div>additional notes</div>
-                <ul>
-                  {currentMethod.notes.map((note, idx) => (
-                    <li key={idx} className={styles.fontRegular}>
-                      {note}
-                    </li>
-                  ))}
-                </ul>
+          <div className={styles.details}>
+            <button onClick={() => setExpandedDetails(!expandedDetails)}>
+              <img
+                src="/assets/images/chevron.svg"
+                className={expandedDetails ? styles.rotateDown : styles.rotateRight}
+              />
+              <h1 className={styles.heading}>recipe details</h1>
+            </button>
+            {expandedDetails && (
+              <div>
+                <div className={styles.detailsItem}>
+                  <span>ratio</span>
+                  <span className={styles.fontRegular}>{ratio}</span>
+                </div>
+                <div className={styles.detailsItem}>
+                  <span>water temperature</span>
+                  <span className={styles.fontRegular}>{waterTemp}ºF</span>
+                </div>
+                <div className={styles.detailsItem}>
+                  <span>grind size</span>
+                  <span className={styles.fontRegular}>{grindSize}</span>
+                </div>
+                <div className={styles.detailsInstructions}>
+                  <div>instructions</div>
+                  <ol>
+                    {instructions.map((step, idx) => (
+                      <li key={idx} className={styles.fontRegular}>
+                        {step}
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+                {currentMethod.notes && (
+                  <div className={styles.detailsInstructions}>
+                    <div>additional notes</div>
+                    <ul>
+                      {currentMethod.notes.map((note, idx) => (
+                        <li key={idx} className={styles.fontRegular}>
+                          {note}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             )}
           </div>
