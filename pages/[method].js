@@ -116,8 +116,6 @@ const Recipe = () => {
     setAmountOfCoffee(convertedCoffee[0].toFixed(1));
   };
 
-  console.log("expandedDetails :>> ", expandedDetails);
-
   if (!method) {
     return <div>loading...</div>;
   } else {
@@ -183,7 +181,12 @@ const Recipe = () => {
             </div>
           </form>
           <div className={styles.details}>
-            <button onClick={() => setExpandedDetails(!expandedDetails)}>
+            <button
+              onClick={() => setExpandedDetails(!expandedDetails)}
+              aria-expanded={expandedDetails}
+              aria-controls="recipe details"
+              id="recipeDetailsAccordion"
+            >
               <img
                 src="/assets/images/chevron.svg"
                 className={expandedDetails ? styles.rotateDown : styles.rotateRight}
@@ -191,7 +194,7 @@ const Recipe = () => {
               <h1 className={styles.heading}>recipe details</h1>
             </button>
             {expandedDetails && (
-              <div>
+              <div id="recipe details" role="region" aria-labelledby="recipeDetailsAccordion">
                 <div className={styles.detailsItem}>
                   <span>ratio</span>
                   <span className={styles.fontRegular}>{ratio}</span>

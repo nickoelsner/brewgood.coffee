@@ -18,6 +18,7 @@
       color: inherit;
       border: none;
       background-color: inherit;
+      cursor: pointer;
 
       .rotateRight {
         transform: rotate(90deg);
@@ -29,6 +30,10 @@
         transition: all 0.1s ease;
       }
     }
+
+    button:focus {
+      outline: 1px solid $color-secondary;
+    }
   }
 
   .methods {
@@ -39,6 +44,10 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
     margin-bottom: 1rem;
+
+    @media only screen and (min-width: 736px) {
+      justify-content: center;
+    }
 
     .button {
       border: 3px solid $color-primary;
@@ -158,7 +167,6 @@
 
         .selected {
           border-color: $color-secondary;
-
           background-color: rgba(129, 97, 87, 0.12);
         }
       }
