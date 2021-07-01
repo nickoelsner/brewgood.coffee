@@ -10,7 +10,7 @@ export default function Home() {
         <Link href="/brewMethods">
           <a className={styles.button}>
             <span>start brewing</span>
-            <img src="/assets/images/arrow.svg" alt="" />
+            <img src="/assets/images/arrow.svg" alt="chevron right" />
           </a>
         </Link>
       </main>

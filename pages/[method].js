@@ -146,7 +146,7 @@ const Recipe = () => {
                   <input
                     type="radio"
                     name="coffeeUnits"
-                    id={unit}
+                    id={`coffee-unit-${unit}`}
                     value={unit}
                     onChange={() => handleCoffeeUnitsChange(unit)}
                     checked={coffeeUnits === unit}
@@ -170,7 +170,7 @@ const Recipe = () => {
                   <input
                     type="radio"
                     name="waterUnits"
-                    id={unit}
+                    id={`water-unit-${unit}`}
                     value={unit}
                     onChange={() => handleWaterUnitsChange(unit)}
                     checked={waterUnits === unit}
@@ -190,6 +190,7 @@ const Recipe = () => {
               <img
                 src="/assets/images/chevron.svg"
                 className={expandedDetails ? styles.rotateDown : styles.rotateRight}
+                alt="chevron"
               />
               <h1 className={styles.heading}>recipe details</h1>
             </button>
