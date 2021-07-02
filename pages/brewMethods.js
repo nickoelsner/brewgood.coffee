@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Head from "next/head";
 import styles from "../styles/BrewMethods.module.scss";
 import { brewData } from "../data/brewMethodData";
 
@@ -15,15 +16,20 @@ const BrewMethodCard = ({ brewMethod }) => {
 
 export default function BrewMethods() {
   return (
-    <div className={styles.container}>
-      <main className={styles.main}>
-        <h1 className={styles.title}>select a brewing method</h1>
-        <section className={styles.grid}>
-          {brewData.map((brewMethod, idx) => (
-            <BrewMethodCard brewMethod={brewMethod} key={idx} />
-          ))}
-        </section>
-      </main>
-    </div>
+    <>
+      <Head>
+        <title>brewgood.coffee</title>
+      </Head>
+      <div className={styles.container}>
+        <main className={styles.main}>
+          <h1 className={styles.title}>select a brewing method</h1>
+          <section className={styles.grid}>
+            {brewData.map((brewMethod, idx) => (
+              <BrewMethodCard brewMethod={brewMethod} key={idx} />
+            ))}
+          </section>
+        </main>
+      </div>
+    </>
   );
 }

@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/router";
 import { brewData, coffeeUnitOptions, waterUnitOptions } from "../data/brewMethodData";
 import Link from "next/link";
+import Head from "next/head";
 import styles from "../styles/Recipe.module.scss";
 
 const Recipe = () => {
@@ -126,6 +127,9 @@ const Recipe = () => {
   } else {
     return (
       <>
+        <Head>
+          <title>brewgood.coffee</title>
+        </Head>
         <section className={styles.methods} onWheel={scrollHorizontal} ref={hzMouseScroll}>
           {brewData.map((brewMethod, idx) => {
             const selected = name === brewMethod.name ? styles.selected : "";
