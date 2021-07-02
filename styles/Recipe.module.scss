@@ -88,7 +88,7 @@
     @extend %button-base;
     flex-direction: column;
     max-width: 320px;
-    margin: auto;
+    margin: 0 auto 1rem;
     padding: 0;
 
     @media only screen and (min-width: 336px) {
@@ -165,7 +165,7 @@
 
         @media only screen and (min-width: 376px) {
           justify-content: flex-end;
-          gap: 1rem;
+          gap: 0.5rem;
         }
 
         label {
