@@ -7,7 +7,7 @@ export default function MyApp({ Component, pageProps }) {
         <Component {...pageProps} />
       </div>
       <footer>
-        made with ❤️ and ☕️ by <a href="https://twitter.com/NickOelsner">nick oelsner</a>
+        made with <em>❤️</em> and <em>☕️</em> by <a href="https://twitter.com/NickOelsner">nick oelsner</a>
       </footer>
     </div>
   );

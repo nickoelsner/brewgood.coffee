@@ -1,9 +1,57 @@
 @import "/styles/colors";
 @import "/styles/base";
 
+.methods {
+  display: flex;
+  overflow-x: auto;
+  gap: 10px;
+  padding: 2rem 1.75rem 4px;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  margin-bottom: 1rem;
+
+  @media only screen and (min-width: 736px) {
+    justify-content: center;
+  }
+
+  .button {
+    border: 3px solid $color-primary;
+    background-color: white;
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 36px;
+    box-shadow: 3px 3px 0px $color-primary;
+    white-space: nowrap;
+  }
+
+  .button:hover,
+  .button:focus {
+    box-shadow: none;
+    transform: translate(3px, 3px);
+    transition: all 0.1s ease;
+    outline: none;
+  }
+
+  .selected {
+    background-color: $color-secondary;
+    color: white;
+    box-shadow: none;
+    transform: translate(3px, 3px);
+    transition: all 0.1s ease;
+  }
+}
+.methods::-webkit-scrollbar {
+  display: none;
+}
+
 .container {
-  min-height: 100vh;
-  padding: 2rem 1.75rem;
+  min-height: calc(100vh - 88px);
+  padding: 0 1.75rem 2rem;
 
   .details {
     justify-self: start;
@@ -36,54 +84,6 @@
     }
   }
 
-  .methods {
-    display: flex;
-    overflow-x: auto;
-    gap: 10px;
-    padding: 4px 0;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    margin-bottom: 1rem;
-
-    @media only screen and (min-width: 736px) {
-      justify-content: center;
-    }
-
-    .button {
-      border: 3px solid $color-primary;
-      background-color: white;
-      padding: 0.75rem;
-      border-radius: 0.75rem;
-      font-weight: 600;
-      font-size: 1rem;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      height: 36px;
-      box-shadow: 3px 3px 0px $color-primary;
-      white-space: nowrap;
-    }
-
-    .button:hover,
-    .button:focus {
-      box-shadow: none;
-      transform: translate(3px, 3px);
-      transition: all 0.1s ease;
-      outline: none;
-    }
-
-    .selected {
-      background-color: $color-secondary;
-      color: white;
-      box-shadow: none;
-      transform: translate(3px, 3px);
-      transition: all 0.1s ease;
-    }
-  }
-  .methods::-webkit-scrollbar {
-    display: none;
-  }
-
   .recipe {
     @extend %button-base;
     flex-direction: column;
@@ -92,7 +92,7 @@
     padding: 0;
 
     @media only screen and (min-width: 336px) {
-      max-width: 704px;
+      max-width: 708px;
     }
 
     .detailsItem {
@@ -180,6 +180,7 @@
           border: 2px solid white;
           border-radius: 0.75rem;
           padding: 5px 12px;
+          cursor: pointer;
         }
 
         input[type="radio"] {
@@ -197,7 +198,11 @@
   }
 
   .recipe > * {
-    padding: 0.75rem;
+    padding: 1rem;
+
+    @media only screen and (min-width: 736px) {
+      padding: 1.5rem 3rem;
+    }
   }
 }
 

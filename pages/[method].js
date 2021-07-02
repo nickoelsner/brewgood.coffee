@@ -125,7 +125,7 @@ const Recipe = () => {
     return <div>loading...</div>;
   } else {
     return (
-      <main className={styles.container}>
+      <>
         <section className={styles.methods} onWheel={scrollHorizontal} ref={hzMouseScroll}>
           {brewData.map((brewMethod, idx) => {
             const selected = name === brewMethod.name ? styles.selected : "";
@@ -136,124 +136,126 @@ const Recipe = () => {
             );
           })}
         </section>
-        <section className={styles.recipe}>
-          <form>
-            <label className={styles.heading} htmlFor="coffee">
-              coffee
-            </label>
-            <div className={styles.amountContainer}>
-              <input
-                type="number"
-                name="coffee"
-                id="coffee"
-                value={amountOfCoffee}
-                onChange={handleCoffeeChange}
-                className={isMobile ? styles.mobile : ""}
-              />
-              <span className={isMobile ? styles.mobile : ""}>{coffeeUnits}</span>
-            </div>
-            <div className={styles.unitsContainer}>
-              {coffeeUnitOptions.map((unit) => (
-                <label key={unit} className={coffeeUnits === unit ? styles.selected : ""}>
-                  <input
-                    type="radio"
-                    name="coffeeUnits"
-                    id={`coffee-unit-${unit}`}
-                    value={unit}
-                    onChange={() => handleCoffeeUnitsChange(unit)}
-                    checked={coffeeUnits === unit}
-                  />
-                  {unit}
-                </label>
-              ))}
-            </div>
-          </form>
-          <form>
-            <label className={styles.heading} htmlFor="water">
-              water
-            </label>
-            <div className={styles.amountContainer}>
-              <input
-                type="number"
-                name="water"
-                id="water"
-                value={amountOfWater}
-                onChange={handleWaterChange}
-                className={isMobile ? styles.mobile : ""}
-              />
-              <span className={isMobile ? styles.mobile : ""}>{waterUnits}</span>
-            </div>
-            <div className={styles.unitsContainer}>
-              {waterUnitOptions.map((unit) => (
-                <label key={unit} className={waterUnits === unit ? styles.selected : ""}>
-                  <input
-                    type="radio"
-                    name="waterUnits"
-                    id={`water-unit-${unit}`}
-                    value={unit}
-                    onChange={() => handleWaterUnitsChange(unit)}
-                    checked={waterUnits === unit}
-                  />
-                  {unit}
-                </label>
-              ))}
-            </div>
-          </form>
-          <div className={styles.details}>
-            <button
-              onClick={() => setExpandedDetails(!expandedDetails)}
-              aria-expanded={expandedDetails}
-              aria-controls="recipe details"
-              id="recipeDetailsAccordion"
-            >
-              <img
-                src="/assets/images/chevron.svg"
-                className={expandedDetails ? styles.rotateDown : styles.rotateRight}
-                alt="chevron"
-              />
-              <h1 className={styles.heading}>recipe details</h1>
-            </button>
-            {expandedDetails && (
-              <div id="recipe details" role="region" aria-labelledby="recipeDetailsAccordion">
-                <div className={styles.detailsItem}>
-                  <span>ratio</span>
-                  <span className={styles.fontRegular}>{ratio}</span>
-                </div>
-                <div className={styles.detailsItem}>
-                  <span>water temperature</span>
-                  <span className={styles.fontRegular}>{waterTemp}ºF</span>
-                </div>
-                <div className={styles.detailsItem}>
-                  <span>grind size</span>
-                  <span className={styles.fontRegular}>{grindSize}</span>
-                </div>
-                <div className={styles.detailsInstructions}>
-                  <div>instructions</div>
-                  <ol>
-                    {instructions.map((step, idx) => (
-                      <li key={idx} className={styles.fontRegular}>
-                        {step}
-                      </li>
-                    ))}
-                  </ol>
-                </div>
-                {currentMethod.notes && (
+        <main className={styles.container}>
+          <section className={styles.recipe}>
+            <form>
+              <label className={styles.heading} htmlFor="coffee">
+                coffee
+              </label>
+              <div className={styles.amountContainer}>
+                <input
+                  type="number"
+                  name="coffee"
+                  id="coffee"
+                  value={amountOfCoffee}
+                  onChange={handleCoffeeChange}
+                  className={isMobile ? styles.mobile : ""}
+                />
+                <span className={isMobile ? styles.mobile : ""}>{coffeeUnits}</span>
+              </div>
+              <div className={styles.unitsContainer}>
+                {coffeeUnitOptions.map((unit) => (
+                  <label key={unit} className={coffeeUnits === unit ? styles.selected : ""}>
+                    <input
+                      type="radio"
+                      name="coffeeUnits"
+                      id={`coffee-unit-${unit}`}
+                      value={unit}
+                      onChange={() => handleCoffeeUnitsChange(unit)}
+                      checked={coffeeUnits === unit}
+                    />
+                    {unit}
+                  </label>
+                ))}
+              </div>
+            </form>
+            <form>
+              <label className={styles.heading} htmlFor="water">
+                water
+              </label>
+              <div className={styles.amountContainer}>
+                <input
+                  type="number"
+                  name="water"
+                  id="water"
+                  value={amountOfWater}
+                  onChange={handleWaterChange}
+                  className={isMobile ? styles.mobile : ""}
+                />
+                <span className={isMobile ? styles.mobile : ""}>{waterUnits}</span>
+              </div>
+              <div className={styles.unitsContainer}>
+                {waterUnitOptions.map((unit) => (
+                  <label key={unit} className={waterUnits === unit ? styles.selected : ""}>
+                    <input
+                      type="radio"
+                      name="waterUnits"
+                      id={`water-unit-${unit}`}
+                      value={unit}
+                      onChange={() => handleWaterUnitsChange(unit)}
+                      checked={waterUnits === unit}
+                    />
+                    {unit}
+                  </label>
+                ))}
+              </div>
+            </form>
+            <div className={styles.details}>
+              <button
+                onClick={() => setExpandedDetails(!expandedDetails)}
+                aria-expanded={expandedDetails}
+                aria-controls="recipe details"
+                id="recipeDetailsAccordion"
+              >
+                <img
+                  src="/assets/images/chevron.svg"
+                  className={expandedDetails ? styles.rotateDown : styles.rotateRight}
+                  alt="chevron"
+                />
+                <h1 className={styles.heading}>recipe details</h1>
+              </button>
+              {expandedDetails && (
+                <div id="recipe details" role="region" aria-labelledby="recipeDetailsAccordion">
+                  <div className={styles.detailsItem}>
+                    <span>ratio</span>
+                    <span className={styles.fontRegular}>{ratio}</span>
+                  </div>
+                  <div className={styles.detailsItem}>
+                    <span>water temperature</span>
+                    <span className={styles.fontRegular}>{waterTemp}ºF</span>
+                  </div>
+                  <div className={styles.detailsItem}>
+                    <span>grind size</span>
+                    <span className={styles.fontRegular}>{grindSize}</span>
+                  </div>
                   <div className={styles.detailsInstructions}>
-                    <div>additional notes</div>
-                    <ul>
-                      {currentMethod.notes.map((note, idx) => (
+                    <div>instructions</div>
+                    <ol>
+                      {instructions.map((step, idx) => (
                         <li key={idx} className={styles.fontRegular}>
-                          {note}
+                          {step}
                         </li>
                       ))}
-                    </ul>
+                    </ol>
                   </div>
-                )}
-              </div>
-            )}
-          </div>
-        </section>
-      </main>
+                  {currentMethod.notes && (
+                    <div className={styles.detailsInstructions}>
+                      <div>additional notes</div>
+                      <ul>
+                        {currentMethod.notes.map((note, idx) => (
+                          <li key={idx} className={styles.fontRegular}>
+                            {note}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </section>
+        </main>
+      </>
     );
   }
 };
