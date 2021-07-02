@@ -30,7 +30,7 @@ export const brewData = [
       "wet the entire filter (or as much as you can if using square filters) and pour the water back out of the chemex",
       "put the calculated amount of coffee in the filter, tare the scale, and start the timer",
       "slowly pour in enough hot water to saturate the grounds and leave for 45 seconds",
-      "start slowly pouring more water, moving in a curcular pattern. try to keep the water level steady, about half-way down the filter. stop pouring when the calculated amount of water has been added",
+      "start slowly pouring more water, moving in a circular pattern. try to keep the water level steady, about halfway down the filter. stop pouring when the calculated amount of water has been added",
     ],
     notes: null,
   },
@@ -44,15 +44,15 @@ export const brewData = [
     waterTemp: 205,
     grindSize: "fine to meduim",
     instructions: [
-      "put a paper filter in the black cap and wet with water",
-      "screw the cap onto the large cylider and place it on top of you cup (cap at the bottom), then place the whole cup on the scale and tare it",
+      "put a paper filter in the black cap and wet it with water",
+      "screw the cap onto the large cylinder and place it on top of your cup (cap at the bottom), then place the whole cup on the scale and tare it",
       "add the calculated amount of coffee into the top of the cylinder",
       "pour in the calculated amount of water",
       "stir and let it sit for 30 seconds",
       "insert the smaller cylinder and plunge down firmly and evenly until you hear the hiss of air escaping",
     ],
     notes: [
-      "the aeropress is very flexible brewer, you can experiment with different grind sizes, ratios, and steep times and get great results",
+      "the aeropress is a very flexible brewer, you can experiment with different grind sizes, ratios, and steep times and get great results",
     ],
   },
   {
@@ -86,7 +86,7 @@ export const brewData = [
     waterTemp: 205,
     grindSize: "fine",
     instructions: [
-      "for this recipe the calculated amount of water also serves as the calculated amount of ice",
+      "for this recipe, the calculated amount of water also serves as the calculated amount of ice",
       "choose your desired brewing device (pour-over cone, chemex, etc.)",
       "add the calculated amount of ice to the bottom of the cup/glass/carafe",
       "add the calculated amount of coffee to the filter and place it on top of the cup/glass/carafe",
