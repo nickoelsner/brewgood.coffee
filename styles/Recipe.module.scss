@@ -3,7 +3,7 @@
 
 .container {
   min-height: 100vh;
-  padding: 5vh 1rem;
+  padding: 2rem 1.75rem;
 
   .details {
     justify-self: start;
@@ -145,17 +145,23 @@
           border: none;
           text-align: right;
           align-items: flex-end;
-          // height: 3.5rem;
+        }
+
+        input.mobile {
+          height: 5rem;
         }
 
         span {
           font-size: 2.5rem;
           color: $color-secondary;
-          // padding-bottom: 24px;
           padding-bottom: 5px;
           white-space: nowrap;
           transform: rotate3d(180deg);
           transition: all 1s ease;
+        }
+
+        span.mobile {
+          padding-bottom: 11px;
         }
       }
 

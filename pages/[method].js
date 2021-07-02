@@ -15,6 +15,11 @@ const Recipe = () => {
   const [amountOfWater, setAmountOfWater] = useState(0);
   const [waterUnits, setWaterUnits] = useState("g");
   const [expandedDetails, setExpandedDetails] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(/Mobi|Android/i.test(navigator.userAgent));
+  }, []);
 
   useEffect(() => {
     const convertedStartingCoffee = convertCoffeeUnits("g", coffeeUnits, currentMethod.startingCoffee);
@@ -137,8 +142,15 @@ const Recipe = () => {
               coffee
             </label>
             <div className={styles.amountContainer}>
-              <input type="number" name="coffee" id="coffee" value={amountOfCoffee} onChange={handleCoffeeChange} />
-              <span>{coffeeUnits}</span>
+              <input
+                type="number"
+                name="coffee"
+                id="coffee"
+                value={amountOfCoffee}
+                onChange={handleCoffeeChange}
+                className={isMobile ? styles.mobile : ""}
+              />
+              <span className={isMobile ? styles.mobile : ""}>{coffeeUnits}</span>
             </div>
             <div className={styles.unitsContainer}>
               {coffeeUnitOptions.map((unit) => (
@@ -161,8 +173,15 @@ const Recipe = () => {
               water
             </label>
             <div className={styles.amountContainer}>
-              <input type="number" name="water" id="water" value={amountOfWater} onChange={handleWaterChange} />
-              <span>{waterUnits}</span>
+              <input
+                type="number"
+                name="water"
+                id="water"
+                value={amountOfWater}
+                onChange={handleWaterChange}
+                className={isMobile ? styles.mobile : ""}
+              />
+              <span className={isMobile ? styles.mobile : ""}>{waterUnits}</span>
             </div>
             <div className={styles.unitsContainer}>
               {waterUnitOptions.map((unit) => (
