@@ -10,7 +10,7 @@ brewgood.coffee is built using next.js and scss
 Clone the project
 
 ```bash
-  git clone https://link-to-project
+  git clone https://github.com/noelsner/brewgood.coffee.git
 ```
 
 Go to the project directory
